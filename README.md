@@ -23,3 +23,4 @@ Issues:
 
 - `ParameterizedItemModelLoader:37` private access - META_INF/libnine_at.cfg should make fields public
 In `build.gradle` `accessTransformer = file('src/main/resources/META-INF/libnine_at.cfg')` is responsible for this
+- Try clicking gradle reload if anything weird
