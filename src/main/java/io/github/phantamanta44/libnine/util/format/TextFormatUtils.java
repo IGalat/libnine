@@ -9,14 +9,8 @@ import static net.minecraft.util.text.TextFormatting.*;
 public class TextFormatUtils {
 
     public static int getTextColour(TextFormatting format) {
-        String superStupidNewForgeColorCoding = "0123456789abcdef";
         int index = format.getColorIndex();
-
-        if ((index < 0) || (index >= superStupidNewForgeColorCoding.length()))
-            return 0xFFFFFF;
-
-        return Minecraft.getMinecraft().fontRenderer
-                .getColorCode(superStupidNewForgeColorCoding.charAt(index));
+        return index == -1 ? 0xFFFFFF : Minecraft.getMinecraft().fontRenderer.colorCode[index];
     }
 
     public static float getComponent(int colour, int compIndex) {

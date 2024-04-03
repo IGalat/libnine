@@ -22,27 +22,19 @@ import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 public class ParameterizedItemModelLoader implements ICustomModelLoader {
 
     private final ResourceInjector resourceInjector;
 
     public ParameterizedItemModelLoader() {
-        try {
-            Field nameField = Minecraft.getMinecraft().getClass()
-                    .getDeclaredField("defaultResourcePacks");
-            nameField.setAccessible(true);
-            List<IResourcePack> packs = (List<IResourcePack>) nameField.get(Minecraft.getMinecraft());
-
-            this.resourceInjector = new ResourceInjector();
-            packs.add(this.resourceInjector);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-
+        this.resourceInjector = new ResourceInjector();
+        Minecraft.getMinecraft().defaultResourcePacks.add(this.resourceInjector);
     }
 
     @Override
@@ -123,7 +115,7 @@ public class ParameterizedItemModelLoader implements ICustomModelLoader {
         }
 
         ResourceLocation injectResource(String resource) {
-            resources.put("models/" + resourceIndex + ".json", resource);
+            resources.put("models/" + Long.toString(resourceIndex) + ".json", resource);
             return new ResourceLocation(RESOURCE_DOMAIN, Long.toString(resourceIndex++));
         }
 

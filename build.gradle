@@ -30,6 +30,7 @@ dependencies {
 
 minecraft {
     mappings channel: "stable", version: "39-1.12"
+    accessTransformer = file('src/main/resources/META-INF/libnine_at.cfg')
 
     runs {
         "client" {
@@ -62,6 +63,12 @@ processResources {
 
     rename 'libnine_at.cfg', 'META-INF/libnine_at.cfg'
 }
+
+//jar {
+//    manifest {
+//        attributes 'FMLAT': 'libnine_at.cfg'
+//    }
+//}
 
 //When Forge 1.12 loads mods from a directory that's been put on the classpath, it expects to find resources in the same directory.
 //Default Gradle behavior puts resources in ./build/resources/main instead of ./build/classes/main/java. Let's change that.
